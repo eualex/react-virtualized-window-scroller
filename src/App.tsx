@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import faker from "faker";
+
+import { UserItem } from "./components/UserItem";
+import { Virtualized } from "./components/Virtualized";
+
+import * as S from "./styles";
+
+const data = Array.from({ length: 1000 }).map(() => ({
+  name: faker.name.firstName(),
+  description: faker.lorem.text(),
+}));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <S.Global />
+      <S.Title>This is react virtualized with window scroll example</S.Title>
+
+      <Virtualized
+        dataLength={data.length}
+        onRender={(index) => (
+          <UserItem
+            name={data[index].name}
+            description={data[index].description}
+          />
+        )}
+      />
+    </>
   );
 }
 
